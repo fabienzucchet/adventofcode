@@ -83,12 +83,19 @@ func fuelCostFromMass(mass int) (cost int) {
 
 // Compute the fuel cost required for a given module and its fuel
 func fuelCostFromMassWithFuel(mass int) (totalCost int) {
+
 	cost := fuelCostFromMass(mass)
 
 	totalCost = cost
 
-	for cost > 0 {
+	for {
 		cost = fuelCostFromMass(cost)
+
+		// If cost is negative, we don't need to add it to the total cost
+		if cost <= 0 {
+			break
+		}
+
 		totalCost += cost
 	}
 

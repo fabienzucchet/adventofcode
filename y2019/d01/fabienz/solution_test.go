@@ -21,7 +21,6 @@ func ExamplePartOne() {
 	// Output: 3372695
 }
 
-// TODO: Fix this test
 func ExamplePartTwo() {
 	file, err := os.Open("testdata/input.txt")
 	if err != nil {
@@ -32,7 +31,7 @@ func ExamplePartTwo() {
 	if err := PartTwo(file, os.Stdout); err != nil {
 		log.Fatalf("could not solve: %v", err)
 	}
-	// Output: 5056044
+	// Output: 5056172
 }
 
 func Benchmark(b *testing.B) {
