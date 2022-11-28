@@ -1,0 +1,50 @@
+name: Unit tests
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  # Run unit tests.
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      # Check out the pull request's source code.
+      - name: Check out source code
+        uses: actions/checkout@v2
+
+      # Install Go.
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.17' # The Go version to download and use.
+
+      # Set up caching.
+      - name: Set up caching
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.cache/go-build
+            ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      # Check source code is properly formatted.
+      - name: Check source code is properly formatted.
+        run: |-
+          make fmt
+          git diff-index --quiet HEAD --
+
+      # Vet source code.
+      - name: Vet source code.
+        run: make vet
+
+      # Run unit tests.
+      - name: Run unit tests
+        timeout-minutes: 5
+        run: make test
