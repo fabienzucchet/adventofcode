@@ -198,7 +198,7 @@ func tokenize(expression string) (tokens []string) {
 }
 
 // This function evaluates one expression
-//We use the algorithm explained in https://www.geeksforgeeks.org/expression-evaluation/
+// We use the algorithm explained in https://www.geeksforgeeks.org/expression-evaluation/
 func evaluate(expression string, precedence map[string]int) (result int, err error) {
 	tokens := tokenize(expression)
 
