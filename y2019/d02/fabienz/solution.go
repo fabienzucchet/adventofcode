@@ -5,6 +5,7 @@ import (
 	"io"
 
 	"gitlab.com/padok-team/adventofcode/helpers"
+	"gitlab.com/padok-team/adventofcode/y2019/opcode"
 )
 
 // PartOne solves the first problem of day 2 of Advent of Code 2019.
@@ -20,24 +21,21 @@ func PartOne(input io.Reader, answer io.Writer) error {
 	}
 
 	// Parse the input.
-	intcode, err := helpers.IntsFromString(lines[0], ",")
+	instructions, err := helpers.IntsFromString(lines[0], ",")
 	if err != nil {
 		return fmt.Errorf("could not parse intcode: %w", err)
 	}
 
+	// Create the program
+	intcode := opcode.Intcode{Program: instructions}
+
 	// Init the program
-	initIntcode(intcode, 12, 2)
+	opcode.InitIntcode(intcode, 12, 2)
 
 	// Run the program
-	pos := 0
-	for pos >= 0 {
-		pos, err = computeStep(intcode, pos)
-		if err != nil {
-			return fmt.Errorf("could not compute step: %w", err)
-		}
-	}
+	opcode.RunIntcode(intcode)
 
-	_, err = fmt.Fprintf(answer, "%d", intcode[0])
+	_, err = fmt.Fprintf(answer, "%d", intcode.Program[0])
 	if err != nil {
 		return fmt.Errorf("could not write answer: %w", err)
 	}
@@ -60,24 +58,21 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 	for noun := 0; noun < 100 && output != 19690720; noun++ {
 		for verb := 0; verb < 100 && output != 19690720; verb++ {
 			// Parse the input.
-			intcode, err := helpers.IntsFromString(lines[0], ",")
+			instructions, err := helpers.IntsFromString(lines[0], ",")
 			if err != nil {
 				return fmt.Errorf("could not parse intcode: %w", err)
 			}
 
+			// Create the program
+			intcode := opcode.Intcode{Program: instructions}
+
 			// Init the program
-			initIntcode(intcode, noun, verb)
+			opcode.InitIntcode(intcode, noun, verb)
 
 			// Run the program
-			pos := 0
-			for pos >= 0 {
-				pos, err = computeStep(intcode, pos)
-				if err != nil {
-					return fmt.Errorf("could not compute step: %w", err)
-				}
-			}
+			opcode.RunIntcode(intcode)
 
-			output = intcode[0]
+			output = intcode.Program[0]
 			if output == 19690720 {
 				result = 100*noun + verb
 			}
@@ -91,27 +86,4 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 	}
 
 	return nil
-}
-
-// Compute a step of the intcode program
-func computeStep(intcode []int, pos int) (newPos int, err error) {
-	opcode := intcode[pos]
-	switch opcode {
-	case 1:
-		intcode[intcode[pos+3]] = intcode[intcode[pos+1]] + intcode[intcode[pos+2]]
-		return pos + 4, nil
-	case 2:
-		intcode[intcode[pos+3]] = intcode[intcode[pos+1]] * intcode[intcode[pos+2]]
-		return pos + 4, nil
-	case 99:
-		return -1, nil
-	default:
-		return -1, fmt.Errorf("unknown opcode %d", opcode)
-	}
-}
-
-// Init the intcode program with the 1202 alarm state
-func initIntcode(intcode []int, noun int, verb int) {
-	intcode[1] = noun
-	intcode[2] = verb
 }
