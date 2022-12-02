@@ -1,23 +1,12 @@
 # Advent of Code
 
-![unit-tests-passing](https://github.com/padok-team/adventofcode/actions/workflows/unit-tests.yml/badge.svg)
-![go-version](https://img.shields.io/badge/Go-v1.17-29beb0)
-[![slack-channel](https://img.shields.io/badge/Slack-%23random--adventofcode-informational?logo=Slack)](https://padok.slack.com/archives/C01GJ840KDE)
-[![leaderboard-code](https://img.shields.io/badge/Leaderboard%20code-195930--a9e1d68e-green)](https://adventofcode.com/2021/leaderboard/private)
+![unit-tests-passing](https://github.com/fabienzucchet/adventofcode/actions/workflows/unit-tests.yml/badge.svg)
 
 [Advent of Code](https://adventofcode.com) is an Advent calendar of small
 programming puzzles for a variety of skill sets and skill levels that can be
 solved in any programming language you like.
 
-At Padok, we see this as an opportunity to improve our coding skills and enjoy
-ourselves while doing it.
-
-In the Cloud Native ecosystem, [Go](https://golang.org/) has emerged as the
-language of choice. As a Site Reliability Engineer, knowing how to write
-software in Go is a useful skill.
-
-Whether you are new to Go or have already written countless lines of it, this
-repository aims at giving you everything you need to improve.
+This repository contains my solutions to the puzzles, written in Go.
 
 ## Getting started
 
@@ -138,7 +127,7 @@ If you have [direnv](https://direnv.net/) installed, you can add a `.envrc` file
 to the `adventofcode` directory that looks like this:
 
 ```bash
-export ADVENTOFCODE_AUTHOR="arthurb"
+export ADVENTOFCODE_AUTHOR="fabienz"
 export ADVENTOFCODE_WORKDIR="$(git rev-parse --show-toplevel)"
 export ADVENTOFCODE_COOKIE="abcdef0123456789..."
 ```
@@ -150,8 +139,8 @@ your home directory: `$HOME/.adventofcode.yaml`. In this file, you can set
 values for any flag. For example, your configuration file could look like this:
 
 ```yaml
-author: arthurb
-workdir: /Users/arthur/workspace/padok/adventofcode
+author: fabienz
+workdir: /Users/fabien/workspace/adventofcode
 cookie: abdefg0123456789...
 ```
 
@@ -162,4 +151,4 @@ the `#random-adventofcode` Slack channel.
 
 ---
 
-Made with 💜 by a fellow Padok SRE.
+Made with 💜 by [@busser](https://github.com/busser).
