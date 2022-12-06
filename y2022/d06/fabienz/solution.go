@@ -63,12 +63,9 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 
 // Check if all characters in a string are distinct.
 func isDistinct(s string) bool {
-	for i := 0; i < len(s); i++ {
-		for j := i + 1; j < len(s); j++ {
-			if s[i] == s[j] {
-				return false
-			}
-		}
+	seen := make(map[rune]bool)
+	for _, char := range s {
+		seen[char] = true
 	}
-	return true
+	return len(seen) == len(s)
 }
