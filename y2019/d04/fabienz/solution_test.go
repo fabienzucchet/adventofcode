@@ -18,7 +18,7 @@ func ExamplePartOne() {
 	if err := PartOne(file, os.Stdout); err != nil {
 		log.Fatalf("could not solve: %v", err)
 	}
-	// Output: 3372695
+	// Output: 1686
 }
 
 func ExamplePartTwo() {
@@ -31,7 +31,7 @@ func ExamplePartTwo() {
 	if err := PartTwo(file, os.Stdout); err != nil {
 		log.Fatalf("could not solve: %v", err)
 	}
-	// Output: 5056172
+	// Output: 1145
 }
 
 func Benchmark(b *testing.B) {
