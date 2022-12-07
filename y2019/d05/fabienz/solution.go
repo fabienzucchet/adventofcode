@@ -25,7 +25,7 @@ func PartOne(input io.Reader, answer io.Writer) error {
 	intcode := opcode.Intcode{Program: program, Inputs: inputs}
 
 	// Run the program
-	outputs, err := opcode.RunIntcode(intcode)
+	outputs, err := opcode.RunIntcode(&intcode)
 	if err != nil {
 		return fmt.Errorf("could not run intcode: %w", err)
 	}
@@ -56,7 +56,7 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 	intcode := opcode.Intcode{Program: program, Inputs: inputs}
 
 	// Run the program
-	outputs, err := opcode.RunIntcode(intcode)
+	outputs, err := opcode.RunIntcode(&intcode)
 	if err != nil {
 		return fmt.Errorf("could not run intcode: %w", err)
 	}

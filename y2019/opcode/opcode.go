@@ -9,12 +9,15 @@ type Intcode struct {
 	Program []int
 	Inputs  []int
 	Outputs []int
+	Pos     int
+	Halted  bool
 }
 
 // Compute a step of the intcode program
-func ComputeStep(intcode *Intcode, pos int) (newPos int, err error) {
+func ComputeStep(intcode *Intcode) (err error) {
 	// Get the instructions
 	instructions := intcode.Program
+	pos := intcode.Pos
 
 	// Parse the instruction and the parameters depending on the parameters mode
 	opcode := instructions[pos] % 100
@@ -24,48 +27,65 @@ func ComputeStep(intcode *Intcode, pos int) (newPos int, err error) {
 	switch opcode {
 	case 1: // Add
 		instructions[instructions[pos+3]] = getParamValue(instructions, pos+1, param1Mode) + getParamValue(instructions, pos+2, param2Mode)
-		return pos + 4, nil
+		intcode.Pos = pos + 4
+		return nil
 	case 2: // Multiply
 		instructions[instructions[pos+3]] = getParamValue(instructions, pos+1, param1Mode) * getParamValue(instructions, pos+2, param2Mode)
-		return pos + 4, nil
+		intcode.Pos = pos + 4
+		return nil
 	case 3: // Input
 		if len(intcode.Inputs) == 0 {
-			return -1, fmt.Errorf("no input")
+			// Save the position of the instruction in the program
+			intcode.Pos = pos
+			intcode.Halted = true
+			return nil
 		}
 		instructions[instructions[pos+1]] = intcode.Inputs[0]
 		intcode.Inputs = intcode.Inputs[1:]
-		return pos + 2, nil
+		intcode.Pos = pos + 2
+		return nil
 	case 4: // Output
 		intcode.Outputs = append(intcode.Outputs, getParamValue(instructions, pos+1, param1Mode))
-		return pos + 2, nil
+		intcode.Pos = pos + 2
+		return nil
 	case 5: // Jump if true
 		if getParamValue(instructions, pos+1, param1Mode) != 0 {
-			return getParamValue(instructions, pos+2, param2Mode), nil
+			intcode.Pos = getParamValue(instructions, pos+2, param2Mode)
+			return nil
 		}
-		return pos + 3, nil
+		intcode.Pos = pos + 3
+		return nil
 	case 6: // Jump if false
 		if getParamValue(instructions, pos+1, param1Mode) == 0 {
-			return getParamValue(instructions, pos+2, param2Mode), nil
+			intcode.Pos = getParamValue(instructions, pos+2, param2Mode)
+			return nil
 		}
-		return pos + 3, nil
+		intcode.Pos = pos + 3
+		return nil
 	case 7: // Less than
 		if getParamValue(instructions, pos+1, param1Mode) < getParamValue(instructions, pos+2, param2Mode) {
 			instructions[instructions[pos+3]] = 1
 		} else {
 			instructions[instructions[pos+3]] = 0
 		}
-		return pos + 4, nil
+		intcode.Pos = pos + 4
+		return nil
 	case 8: // Equals
 		if getParamValue(instructions, pos+1, param1Mode) == getParamValue(instructions, pos+2, param2Mode) {
 			instructions[instructions[pos+3]] = 1
 		} else {
 			instructions[instructions[pos+3]] = 0
 		}
-		return pos + 4, nil
+		intcode.Pos = pos + 4
+		return nil
 	case 99:
-		return -1, nil
+		intcode.Pos = -1
+		intcode.Halted = true
+		return nil
 	default:
-		return -1, fmt.Errorf("unknown opcode %d", opcode)
+		intcode.Pos = -1
+		intcode.Halted = true
+		return fmt.Errorf("unknown opcode %d", opcode)
 	}
 }
 
@@ -84,11 +104,10 @@ func getParamValue(instructions []int, pos int, mode int) int {
 }
 
 // Run the intcode program
-func RunIntcode(intcode Intcode) ([]int, error) {
-	pos := 0
-	for pos >= 0 {
-		var err error
-		pos, err = ComputeStep(&intcode, pos)
+func RunIntcode(intcode *Intcode) ([]int, error) {
+	intcode.Halted = false
+	for !intcode.Halted {
+		err := ComputeStep(intcode)
 		if err != nil {
 			return intcode.Outputs, err
 		}
