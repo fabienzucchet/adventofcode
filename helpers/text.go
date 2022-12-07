@@ -20,3 +20,17 @@ func LinesFromReader(r io.Reader) ([]string, error) {
 
 	return lines, nil
 }
+
+// Convert a rune in an int.
+func IntFromRune(r rune) (int, error) {
+	switch r {
+	case '0':
+		return 0, nil
+	case '1':
+		return 1, nil
+	case '2':
+		return 2, nil
+	default:
+		return 0, fmt.Errorf("invalid rune: %c", r)
+	}
+}

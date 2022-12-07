@@ -8,7 +8,7 @@ import (
 	"gitlab.com/padok-team/adventofcode/y2019/opcode"
 )
 
-// PartOne solves the first problem of day 5 of Advent of Code 2019.
+// PartOne solves the first problem of day 9 of Advent of Code 2019.
 func PartOne(input io.Reader, answer io.Writer) error {
 	// Read the input. Feel free to change it depending on the input.
 	lines, err := helpers.LinesFromReader(input)
@@ -16,21 +16,24 @@ func PartOne(input io.Reader, answer io.Writer) error {
 		return fmt.Errorf("could not read input: %w", err)
 	}
 
-	// Init the program
-	program, err := helpers.IntsFromString(lines[0], ",")
+	// Parse the input.
+	instructions, err := helpers.IntsFromString(lines[0], ",")
 	if err != nil {
 		return fmt.Errorf("could not parse intcode: %w", err)
 	}
-	inputs := []int{1}
-	intcode := opcode.Intcode{Program: program, Inputs: inputs}
+
+	// Create the program
+	intcode := opcode.Intcode{Program: instructions, Inputs: []int{1}}
 
 	// Run the program
-	outputs, err := intcode.RunIntcode()
-	if err != nil {
-		return fmt.Errorf("could not run intcode: %w", err)
+	intcode.RunIntcode()
+
+	// Fail if the program output is not a single value.
+	if len(intcode.Outputs) != 1 {
+		return fmt.Errorf("expected 1 output, got %d", len(intcode.Outputs))
 	}
 
-	_, err = fmt.Fprintf(answer, "%d", outputs[len(outputs)-1])
+	_, err = fmt.Fprintf(answer, "%d", intcode.Outputs[0])
 	if err != nil {
 		return fmt.Errorf("could not write answer: %w", err)
 	}
@@ -38,7 +41,7 @@ func PartOne(input io.Reader, answer io.Writer) error {
 	return nil
 }
 
-// PartTwo solves the second problem of day 5 of Advent of Code 2019.
+// PartTwo solves the second problem of day 9 of Advent of Code 2019.
 func PartTwo(input io.Reader, answer io.Writer) error {
 	// Read the input. Feel free to change it depending on the input.
 	lines, err := helpers.LinesFromReader(input)
@@ -46,22 +49,24 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 		return fmt.Errorf("could not read input: %w", err)
 	}
 
-	// Init the program
-	program, err := helpers.IntsFromString(lines[0], ",")
+	// Parse the input.
+	instructions, err := helpers.IntsFromString(lines[0], ",")
 	if err != nil {
 		return fmt.Errorf("could not parse intcode: %w", err)
 	}
 
-	inputs := []int{5}
-	intcode := opcode.Intcode{Program: program, Inputs: inputs}
+	// Create the program
+	intcode := opcode.Intcode{Program: instructions, Inputs: []int{2}}
 
 	// Run the program
-	outputs, err := intcode.RunIntcode()
-	if err != nil {
-		return fmt.Errorf("could not run intcode: %w", err)
+	intcode.RunIntcode()
+
+	// Fail if the program output is not a single value.
+	if len(intcode.Outputs) != 1 {
+		return fmt.Errorf("expected 1 output, got %d", len(intcode.Outputs))
 	}
 
-	_, err = fmt.Fprintf(answer, "%d", outputs[len(outputs)-1])
+	_, err = fmt.Fprintf(answer, "%d", intcode.Outputs[0])
 	if err != nil {
 		return fmt.Errorf("could not write answer: %w", err)
 	}
