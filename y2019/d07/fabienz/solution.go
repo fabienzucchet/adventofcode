@@ -36,7 +36,7 @@ func PartOne(input io.Reader, answer io.Writer) error {
 			intcode := opcode.Intcode{Program: instructions, Inputs: inputs}
 
 			// Run the computer.
-			outputs, err := opcode.RunIntcode(&intcode)
+			outputs, err := intcode.RunIntcode()
 			if err != nil {
 				return fmt.Errorf("could not run intcode: %w", err)
 			}
@@ -96,7 +96,7 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 				amplifiers[i].Inputs = append(amplifiers[i].Inputs, previousOutput)
 
 				// Run the computer.
-				outputs, err := opcode.RunIntcode(&amplifiers[i])
+				outputs, err := amplifiers[i].RunIntcode()
 				if err != nil {
 					return fmt.Errorf("could not run intcode: %w", err)
 				}

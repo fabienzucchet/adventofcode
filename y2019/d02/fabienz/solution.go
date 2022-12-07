@@ -30,10 +30,10 @@ func PartOne(input io.Reader, answer io.Writer) error {
 	intcode := opcode.Intcode{Program: instructions}
 
 	// Init the program
-	opcode.InitIntcode(intcode, 12, 2)
+	intcode.InitIntcode(12, 2)
 
 	// Run the program
-	opcode.RunIntcode(&intcode)
+	intcode.RunIntcode()
 
 	_, err = fmt.Fprintf(answer, "%d", intcode.Program[0])
 	if err != nil {
@@ -67,10 +67,10 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 			intcode := opcode.Intcode{Program: instructions}
 
 			// Init the program
-			opcode.InitIntcode(intcode, noun, verb)
+			intcode.InitIntcode(noun, verb)
 
 			// Run the program
-			opcode.RunIntcode(&intcode)
+			intcode.RunIntcode()
 
 			output = intcode.Program[0]
 			if output == 19690720 {
