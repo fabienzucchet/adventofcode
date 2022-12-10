@@ -25,10 +25,11 @@ func IntsFromString(str, sep string) ([]int, error) {
 	return ints, nil
 }
 
-// Return the absolute value of an integer.
+// AbsInt returns the absolute value of n.
 func AbsInt(n int) int {
 	if n < 0 {
 		return -n
 	}
+
 	return n
 }
