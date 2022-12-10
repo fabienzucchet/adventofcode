@@ -126,6 +126,9 @@ func (intcode *Intcode) RunIntcode() ([]int, error) {
 
 // Getter of a value in the intcode program at a given position. Adds 0s if the position is out of the program.
 func (intcode Intcode) GetValue(pos int) int {
+	if pos < 0 {
+		panic(fmt.Sprintf("trying to get value at negative position {%d}", pos))
+	}
 	if pos < len(intcode.Program) {
 		return intcode.Program[pos]
 	}

@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 const DIAGSIZE = 12

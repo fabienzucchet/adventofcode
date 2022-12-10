@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 const DIAGRAMSIZE = 1000 // Assume that no line has coordinates greater than 999

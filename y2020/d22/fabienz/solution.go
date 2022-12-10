@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 const BASE = 100 // Base used for the hash of a deck, assume no cards will have a value > 100

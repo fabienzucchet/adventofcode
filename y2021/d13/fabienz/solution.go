@@ -6,7 +6,7 @@ import (
 	"regexp"
 	"strconv"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 // const INITIALROW = 15

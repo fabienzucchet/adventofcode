@@ -40,6 +40,6 @@ func debugPrefix() string {
 func packageFromFunc(f *runtime.Func) string {
 	splitName := strings.Split(f.Name(), ".")
 	packageName := strings.Join(splitName[:len(splitName)-1], ".")
-	packageName = strings.TrimPrefix(packageName, "gitlab.com/padok-team/adventofcode/")
+	packageName = strings.TrimPrefix(packageName, "github.com/fabienzucchet/adventofcode/")
 	return packageName
 }

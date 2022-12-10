@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 const layerWidth = 25

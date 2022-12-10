@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"io"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 // PartOne solves the first problem of day {{ .Day }} of Advent of Code {{ .Year }}.
@@ -18,7 +18,7 @@ func PartOne(input io.Reader, answer io.Writer) error {
 	}
 
 	// TODO: Write code to solve Part 1 here.
-	
+
 	// TODO: Write your solution to Part 1 below.
 	_, err = fmt.Fprintf(answer, "%d", len(lines))
 	if err != nil {
@@ -55,7 +55,7 @@ import (
 	"os"
 	"testing"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 func ExamplePartOne() {
