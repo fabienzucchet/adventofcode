@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"io"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 // PartOne solves the first problem of day 12 of Advent of Code 2022.
