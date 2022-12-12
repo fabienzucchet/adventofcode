@@ -6,7 +6,7 @@ import (
 	"math"
 	"sort"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 // PartOne solves the first problem of day 10 of Advent of Code 2019.

@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 // Size of yhe square of octopuses

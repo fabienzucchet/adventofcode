@@ -4,8 +4,8 @@ import (
 	"fmt"
 	"io"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
-	"gitlab.com/padok-team/adventofcode/y2019/opcode"
+	"github.com/fabienzucchet/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/y2019/opcode"
 )
 
 // PartOne solves the first problem of day 9 of Advent of Code 2019.

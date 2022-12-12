@@ -1,4 +1,4 @@
-module gitlab.com/padok-team/adventofcode
+module github.com/fabienzucchet/adventofcode
 
 go 1.19
 

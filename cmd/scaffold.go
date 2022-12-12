@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
+	"github.com/fabienzucchet/adventofcode/internal/scaffolding"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
-	"gitlab.com/padok-team/adventofcode/internal/scaffolding"
 )
 
 // scaffoldCmd represents the scaffold command

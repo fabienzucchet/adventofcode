@@ -5,7 +5,7 @@ import (
 	"io"
 	"strconv"
 
-	"gitlab.com/padok-team/adventofcode/helpers"
+	"github.com/fabienzucchet/adventofcode/helpers"
 )
 
 // PartOne solves the first problem of day 18 of Advent of Code 2021.
