@@ -11,6 +11,11 @@ type Coord2D struct {
 	Y int
 }
 
+// Manhattan distance between two coordinates.
+func (c Coord2D) ManhattanDistance(other Coord2D) int {
+	return AbsInt(c.X-other.X) + AbsInt(c.Y-other.Y)
+}
+
 // A 2D grid of int.
 type IntGrid2D map[Coord2D]int
 
