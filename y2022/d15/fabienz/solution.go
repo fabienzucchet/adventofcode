@@ -23,7 +23,7 @@ func PartOne(input io.Reader, answer io.Writer) error {
 	}
 
 	// Parse the input.
-	sensors, beacons, _, _, _, _, err := parseLines(lines)
+	sensors, beacons, err := parseLines(lines)
 	if err != nil {
 		return fmt.Errorf("could not parse input: %w", err)
 	}
@@ -45,7 +45,7 @@ func PartTwo(input io.Reader, answer io.Writer) error {
 	}
 
 	// Parse input.
-	sensors, beacons, _, _, _, _, err := parseLines(lines)
+	sensors, beacons, err := parseLines(lines)
 	if err != nil {
 		return fmt.Errorf("could not parse input: %w", err)
 	}
@@ -74,18 +74,16 @@ type beacon struct {
 }
 
 // Parse the input.
-func parseLines(lines []string) ([]sensor, []beacon, int, int, int, int, error) {
+func parseLines(lines []string) ([]sensor, []beacon, error) {
 	sensors := make([]sensor, len(lines))
 	beacons := make([]beacon, 0)
-	// Determine the size of the grid.
-	minX, minY, maxX, maxY := 0, 0, 0, 0
 
 	for i, line := range lines {
 		var sensX, sensY, beaconX, beaconY int
 
 		_, err := fmt.Sscanf(line, "Sensor at x=%d, y=%d: closest beacon is at x=%d, y=%d", &sensX, &sensY, &beaconX, &beaconY)
 		if err != nil {
-			return nil, nil, 0, 0, 0, 0, fmt.Errorf("could not parse line %q: %w", line, err)
+			return nil, nil, fmt.Errorf("could not parse line %q: %w", line, err)
 		}
 
 		sensorPos := helpers.Coord2D{
@@ -116,22 +114,8 @@ func parseLines(lines []string) ([]sensor, []beacon, int, int, int, int, error) 
 				pos: beaconPos,
 			})
 		}
-
-		// Update the grid size.
-		if sensX-closestBeaconDistance < minX {
-			minX = sensX
-		}
-		if sensY-closestBeaconDistance < minY {
-			minY = sensY
-		}
-		if sensX+closestBeaconDistance > maxX {
-			maxX = sensX
-		}
-		if sensY+closestBeaconDistance > maxY {
-			maxY = sensY
-		}
 	}
-	return sensors, beacons, minX, minY, maxX, maxY, nil
+	return sensors, beacons, nil
 }
 
 // Check a given row and count the number of position where the beacon cannot be.
@@ -184,31 +168,38 @@ func checkRow(sensors []sensor, beacons []beacon, row int, minX int, maxX int) i
 	return count
 }
 
+func findPossiblePositionsInRow(sensors []sensor, beacons []beacon, row int, minX int, maxX int) []helpers.Coord2D {
+	possiblePositions := make([]helpers.Coord2D, 0)
+	for x := minX; x <= maxX; x++ {
+		pos := helpers.Coord2D{
+			X: x,
+			Y: row,
+		}
+		isPointCovered := false
+		for _, s := range sensors {
+			dist := s.pos.ManhattanDistance(pos)
+			if dist <= s.closestBeaconDistance {
+				isPointCovered = true
+				// We can skip the next x values that are still covered by the sensor.
+				x += s.closestBeaconDistance - dist
+				break
+			}
+		}
+
+		if !isPointCovered {
+			possiblePositions = append(possiblePositions, pos)
+		}
+	}
+
+	return possiblePositions
+}
+
 // Find the first possible postion for a beacon in a given zone.
 func findFirstPossiblePosition(sensors []sensor, beacons []beacon, minX int, minY int, maxX int, maxY int) (helpers.Coord2D, error) {
 	for y := minY; y <= maxY; y++ {
-		for x := minX; x <= maxX; x++ {
-			isPointCovered := false
-			pos := helpers.Coord2D{
-				X: x,
-				Y: y,
-			}
-
-			// For each sensor, determine if the point is covered.
-			for _, s := range sensors {
-				dist := s.pos.ManhattanDistance(pos)
-				if dist <= s.closestBeaconDistance {
-					isPointCovered = true
-					// We can skip the next x values that are still covered by the sensor.
-					x += s.closestBeaconDistance - dist
-					break
-				}
-			}
-
-			// If we didn't find a sensor covering the point, then it's out candidate.
-			if !isPointCovered {
-				return pos, nil
-			}
+		possiblePositions := findPossiblePositionsInRow(sensors, beacons, y, minX, maxX)
+		if len(possiblePositions) > 0 {
+			return possiblePositions[0], nil
 		}
 	}
 
