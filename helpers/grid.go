@@ -11,6 +11,25 @@ type Coord2D struct {
 	Y int
 }
 
+// System of 3D coordinates.
+type Coord3D struct {
+	X int
+	Y int
+	Z int
+}
+
+// Create the coordinates of all the neighbors of a given coordinate.
+func (c Coord3D) NeighborsWithoutDiagonals() []Coord3D {
+	return []Coord3D{
+		{X: c.X - 1, Y: c.Y, Z: c.Z},
+		{X: c.X + 1, Y: c.Y, Z: c.Z},
+		{X: c.X, Y: c.Y - 1, Z: c.Z},
+		{X: c.X, Y: c.Y + 1, Z: c.Z},
+		{X: c.X, Y: c.Y, Z: c.Z - 1},
+		{X: c.X, Y: c.Y, Z: c.Z + 1},
+	}
+}
+
 // Manhattan distance between two coordinates.
 func (c Coord2D) ManhattanDistance(other Coord2D) int {
 	return AbsInt(c.X-other.X) + AbsInt(c.Y-other.Y)
