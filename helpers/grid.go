@@ -70,3 +70,8 @@ func (g IntGrid2D) Print() {
 		fmt.Println()
 	}
 }
+
+// Add two 2D coordinates.
+func (c Coord2D) Add(other Coord2D) Coord2D {
+	return Coord2D{X: c.X + other.X, Y: c.Y + other.Y}
+}
