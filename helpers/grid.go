@@ -18,6 +18,20 @@ type Coord3D struct {
 	Z int
 }
 
+// Create the coordinates of all the neighbors of a given 2D coordinate, including diagonals.
+func (c Coord2D) Neighbors() []Coord2D {
+	return []Coord2D{
+		{X: c.X - 1, Y: c.Y - 1}, // NW
+		{X: c.X, Y: c.Y - 1},     // N
+		{X: c.X + 1, Y: c.Y - 1}, // NE
+		{X: c.X - 1, Y: c.Y},     // W
+		{X: c.X + 1, Y: c.Y},     // E
+		{X: c.X - 1, Y: c.Y + 1}, // SW
+		{X: c.X, Y: c.Y + 1},     // S
+		{X: c.X + 1, Y: c.Y + 1}, // SE
+	}
+}
+
 // Create the coordinates of all the neighbors of a given coordinate.
 func (c Coord3D) NeighborsWithoutDiagonals() []Coord3D {
 	return []Coord3D{
