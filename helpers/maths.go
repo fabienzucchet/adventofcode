@@ -13,6 +13,18 @@ func MaxInts(ints []int) int {
 	return max
 }
 
+func MinInts(ints []int) int {
+	min := ints[0]
+
+	for _, i := range ints {
+		if i < min {
+			min = i
+		}
+	}
+
+	return min
+}
+
 // Find the GCD of two integers.
 func GCD(a, b int) int {
 	if a < 0 {
